@@ -19,14 +19,8 @@ contract OrderNFT is ERC1155URIStorage, Ownable {
     ) external onlyOwner {
         tokenId += 1;
         string memory existing = uri(tokenId);
-        if (bytes(existing).length == 0) {
-            _setURI(tokenId, tokenUri);
-        } else {
-            require(
-                keccak256(bytes(existing)) == keccak256(bytes(tokenUri)),
-                "Token URI mismatch"
-            );
-        }
+        _setURI(tokenId, tokenUri);
+
         // For same token there are two owner, enabled by ERC1155
         _mint(buyer, tokenId, 1, "");
         _mint(seller, tokenId, 1, "");
